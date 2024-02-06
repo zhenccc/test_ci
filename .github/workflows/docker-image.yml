@@ -21,7 +21,7 @@ jobs:
     - name: Cache packages
       uses: actions/cache@v3
       with:
-      key : test_ci
+        key : test_ci
         path: /test_ci_zhen
 
   build2:
