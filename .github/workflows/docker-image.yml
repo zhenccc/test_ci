@@ -25,4 +25,4 @@ jobs:
 
     steps:
     - name: UnZip docker image
-      run: docker save -o test_ci_zhen.tar test_ci_zhen
+      run: docker load --input test_ci_zhen.tar
