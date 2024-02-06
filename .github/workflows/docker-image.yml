@@ -18,9 +18,11 @@ jobs:
       run: docker build . --file Dockerfile --tag test_ci_zhen:0
     - name: Zip docker image
       run: docker save test_ci_zhen:0 > test_ci_zhen.tar
-    artifacts:
-      paths:
-        - test_ci_zhen.tar
+    - name: Cache packages
+      uses: actions/cache@v3
+      with:
+        path: test_ci_zhen.tar
+
   build2:
     needs: build
     runs-on: ubuntu-latest
