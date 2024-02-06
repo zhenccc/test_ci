@@ -30,12 +30,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: actions/checkout@v3
     - name: Restore cached Primes
       uses: actions/cache/restore@v4
       with:
         path: test_ci_zhen.tar
         key: test_ci
-    - uses: actions/checkout@v3
     - name: UnZip docker image
       run: docker load --input test_ci_zhen.tar
     - name: Build another image
