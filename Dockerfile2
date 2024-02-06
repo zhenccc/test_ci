@@ -1,0 +1,2 @@
+from test_ci_zhen:0
+RUN touch test2.txt

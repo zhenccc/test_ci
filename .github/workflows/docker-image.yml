@@ -15,14 +15,19 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag test_ci_zhen
+      run: docker build . --file Dockerfile --tag test_ci_zhen:0
     - name: Zip docker image
-      run: docker save test_ci_zhen > test_ci_zhen.tar
-
+      run: docker save test_ci_zhen:0 > test_ci_zhen.tar
+    artifacts:
+      paths:
+        - test_ci_zhen.tar
   build2:
     needs: build
     runs-on: ubuntu-latest
 
     steps:
+    - uses: actions/checkout@v3
     - name: UnZip docker image
       run: docker load --input test_ci_zhen.tar
+    - name: Build another image
+      run: docker build . --file Dockerfile2 --tag test_ci_zhen2
