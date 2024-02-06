@@ -19,18 +19,24 @@ jobs:
     - name: Zip docker image
       run: docker save test_ci_zhen:0 > test_ci_zhen.tar
     - name: Cache packages
-      uses: actions/cache@v3
+      uses: actions/cache/save@v4
       with:
+        path: test_ci_zhen.tar
         key : test_ci
-        path: /test_ci_zhen
 
-  # build2:
-  #   needs: build
-  #   runs-on: ubuntu-latest
 
-  #   steps:
-  #   - uses: actions/checkout@v3
-  #   - name: UnZip docker image
-  #     run: docker load --input test_ci_zhen.tar
-  #   - name: Build another image
-  #     run: docker build . --file Dockerfile2 --tag test_ci_zhen2
+  build2:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Restore cached Primes
+      uses: actions/cache/restore@v4
+      with:
+        path: test_ci_zhen.tar
+        key: test_ci
+    - uses: actions/checkout@v3
+    - name: UnZip docker image
+      run: docker load --input test_ci_zhen.tar
+    - name: Build another image
+      run: docker build . --file Dockerfile2 --tag test_ci_zhen2
